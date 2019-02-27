@@ -16,7 +16,7 @@
       - update
 
   - name: Application | Push-deploy application to the target server
-    unarchive: src="{{root_dir}}/../{{artifact_name}}" dest="{{application_base_dir}}" owner="{{deploy_user}}" group="www-data"
+    unarchive: src="{{root_dir}}/{{artifact_name}}" dest="{{application_base_dir}}" owner="{{deploy_user}}" group="www-data"
     become: yes
     tags:
       - application
@@ -92,13 +92,13 @@
     when: application_type == "classic"
 
 
-  - name: Provide dictator state
-    copy: src="{{root_dir}}/files/dictator-site-state-{{env}}.yml"  dest="{{application_base_dir}}/dictator-site-state-{{env}}.yml" owner="{{deploy_user}}"
-    become: yes
-    become_user: "{{deploy_user}}"
-    tags:
-      - application
-      - update
+  # - name: Provide dictator state
+  #   copy: src="{{root_dir}}/files/dictator-site-state-{{env}}.yml"  dest="{{application_base_dir}}/dictator-site-state-{{env}}.yml" owner="{{deploy_user}}"
+  #   become: yes
+  #   become_user: "{{deploy_user}}"
+  #   tags:
+  #     - application
+  #     - update
 
 
   - name: Application | chown -R {{deploy_user}}:www-data  .
