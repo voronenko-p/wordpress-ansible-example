@@ -1,0 +1,6 @@
+---
+
+application_db_name: wordpress
+application_db_user: wordpress
+application_db_password: wordpress
+application_db_host: localhost

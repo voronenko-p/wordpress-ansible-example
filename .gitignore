@@ -1,0 +1,9 @@
+*/roles/sa-*
+*/roles/openstack-ansible-security
+*/**/roles/sa-*
+*.retry
+.envrc
+.idea
+*/**/.terraform
+local_*.sh
+build/

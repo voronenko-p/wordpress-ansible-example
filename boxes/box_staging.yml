@@ -1,0 +1,45 @@
+---
+- hosts: staging
+  gather_facts: False
+
+  vars:
+    - root_dir: "{{playbook_dir}}/.."
+    - env: staging
+
+  vars_files:
+    - common_vars.yml
+
+  pre_tasks:
+    - debug: msg="Pre tasks section"
+
+    - name: ANSIBLE PYTHON | install python 2
+      raw: test -e /usr/bin/python || (apt -qqy update && apt install -qy python-minimal)
+      become: yes
+      tags:
+        - create
+
+    - name:  UNPRIVILEGED USERS | Get acl dependency (ansible unprivileged user operations magic)
+      apt: pkg="acl"
+      become: yes
+      tags:
+        - create
+
+    - name: gather facts
+      setup:
+      tags:
+        - always
+
+    - name: Include environment related variables
+      include_vars: "{{ item }}"
+      ignore_errors: true
+      with_first_found:
+       - "{{env}}_vars.yml"
+       - "local_vars.yml"
+      tags:
+        - always
+
+  tasks:
+     - include_tasks: "{{root_dir}}/components/application.yml"
+       tags: 
+         - always
+         - update

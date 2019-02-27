@@ -1,0 +1,92 @@
+---
+- hosts: wordpress
+  gather_facts: False
+
+  vars:
+    - root_dir: "{{ playbook_dir }}"
+    - shared_dir: "{{ playbook_dir }}"
+
+    - project_phars:
+        - {
+          tool: "wp",
+          extra_phar_params: " --require=/opt/wordpress/dictator/dictator.php"
+          }
+
+  vars_files:
+    - ./lamp_vars.yml
+    - ./lamp_secure_vars.yml
+
+  pre_tasks:
+    - debug: msg="Pre tasks section"
+      tags: always
+
+    - name: ANSIBLE PYTHON | install python 2
+      raw: test -e /usr/bin/python || (apt -qqy update && apt install -qy python-minimal)
+      become: yes
+      tags: always
+
+    - name:  UNPRIVILEGED USERS | Get acl dependency (ansible unprivileged user operations magic)
+      apt: pkg="acl"
+      become: yes
+      tags: always
+
+    - name: gather facts
+      setup:
+      tags: always
+
+  roles:
+
+      - {
+          role: "sa-mysql",
+          tags: [create, mysql, mysql_configure],
+          option_harden_mysql: true,
+          mysql_root_user: root,
+          mysql_root_password: "{{box_mysql_root_password if box_mysql_root_password_override is not defined or box_mysql_root_password_override == \"\" else box_mysql_root_password_override}}",
+          mysql_databases: "{{box_mysql_databases}}",
+          mysql_users: "{{box_mysql_users}}",
+        }
+      - {
+           role: "sa-nginx",
+           nginx_groups: ["www-data"],
+           tags: [create, nginx]
+        }
+
+      - {
+         role: "sa-php-fpm",
+         php_family: "5.6", # 5.6  | 7.0 | hhvm |  default
+         option_install_xdebug: true,
+         custom_pool_properties: "{{wordpress_pool_properties}}",
+         tags: [create, php56]
+        }
+
+      - {
+         role: "sa-php-fpm",
+         php_family: default, # 5.6 | 7.0 | hhvm |  default
+         option_install_xdebug: true,
+         custom_pool_properties: "{{wordpress_pool_properties}}",
+         tags: [create, php7]
+        }
+      # - {
+      #    role: "sa-php-pharables",
+      #    phars: "{{project_phars}}",
+      #    tags: [create, php7]
+      #   }
+      # - {
+      #    role: "sa-php-pharables",
+      #    phars: "{{project_phars}}",
+      #    php_family: "5.6",
+      #    tags: [create, php56]
+      #   }
+
+
+  tasks:
+
+    - debug: msg="Pre tasks section"
+
+    - name: Wordpress dictator
+      git:
+        repo: https://github.com/danielbachhuber/dictator.git
+        dest: /opt/wordpress/dictator
+      become: yes
+      tags:
+        - dictator

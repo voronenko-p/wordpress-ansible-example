@@ -1,0 +1,20 @@
+- src: softasap.sa-nginx
+  name: sa-nginx
+- src: softasap.sa-php-fpm
+  name: sa-php-fpm
+- src: softasap.sa-mysql
+  name: sa-mysql
+- src: softasap.sa-php-pharables
+  name: sa-php-pharables
+- src: softasap.sa-fail2ban
+  name: sa-fail2ban
+- src: softasap.sa-postfix
+  name: sa-postfix
+- src: softasap.sa-include
+  name: sa-include
+- src: softasap.sa-box-bootstrap
+  name: sa-box-bootstrap
+- src: softasap.sa-secure-automatic-updates
+  name: sa-secure-automatic-updates
+
+

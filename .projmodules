@@ -1,0 +1,34 @@
+[submodule "roles/sa-nginx"]
+        path = boxes/roles/sa-nginx
+        url = https://github.com/softasap/sa-nginx.git
+[submodule "roles/sa-apache"]
+        path = boxes/roles/sa-apache
+        url = https://github.com/softasap/sa-apache.git
+[submodule "roles/sa-php-fpm"]
+        path = boxes/roles/sa-php-fpm
+        url = https://github.com/softasap/sa-php-fpm.git
+[submodule "roles/sa-mysql"]
+        path = boxes/roles/sa-mysql
+        url = https://github.com/softasap/sa-mysql.git
+[submodule "roles/sa-php-pharables"]
+        path = boxes/roles/sa-php-pharables
+        url = https://github.com/softasap/sa-php-pharables.git
+[submodule "roles/openstack-ansible-security"]
+        path = roles/openstack-ansible-security
+        url = https://github.com/softasap/openstack-ansible-security.git
+[submodule "roles/sa-fail2ban"]
+        path = roles/sa-fail2ban
+        url = https://github.com/softasap/sa-fail2ban.git
+[submodule "roles/sa-postfix"]
+        path = roles/sa-postfix
+        url = https://github.com/softasap/sa-postfix.git
+[submodule "roles/sa-include"]
+        path = roles/sa-include
+        url = https://github.com/softasap/sa-include.git
+[submodule "roles/sa-box-bootstrap"]
+        path = roles/sa-box-bootstrap
+        url = https://github.com/softasap/sa-box-bootstrap.git
+[submodule "roles/sa-secure-automatic-updates"]
+        path = roles/sa-secure-automatic-updates
+        url = https://github.com/softasap/sa-secure-automatic-updates.git
+
